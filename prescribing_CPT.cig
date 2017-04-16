@@ -1,0 +1,112 @@
+/* Advanced to severe HIV clinical stage */	
+Condition advanced_to_severe_HIV:
+	'WHO clinical stage' is 'WHO stage 3/4'
+	
+/* Age category of an adult */	
+Condition is_an_adult:
+	age >= 15 years	
+
+/* Age from 6 weeks */	
+Condition aged_6_weeks_or_more:
+	age >= 6 weeks	
+
+/* Age under 5 months */	
+Condition aged_less_than_5_months:
+	age < 5 months	
+
+/* Patient is eligible for CPT */	
+Condition eligible_for_CPT:
+	'Eligible for CPT' is Yes
+	
+/* Age category of a child */	
+Condition is_a_child:
+	age < 15 years
+		
+/* Patient on CPT */	
+Condition on_CPT:
+ 	'On CPT' is Yes	
+	
+/* Positive rapid HIV test result */
+Condition positive_rapid_HIV_test:
+	'HIV rapid test result' is positive
+	
+/* Positive rapid HIV test result */
+Condition positive_mother_HIV_status:
+	'Mother HIV status' is positive
+	
+/* Patient presenting with renal or hepatic toxicity */
+Condition with_renal_or_hepatic_toxicity:
+	'Renal or hepatic toxicity' is present
+	
+/* Patient presenting with severe haematological toxicity */
+Condition with_severe_haematological_toxicity:
+	'Severe haematological toxicity' is present
+
+/* Patient presenting with severe cutaneous reactions */
+Condition with_severe_cutaneous_reactions:
+	'Severe cutaneous reaction' is present
+
+/* CD4 count less than 500 */	
+Condition below_CPT_CD4_threshold:
+	'CD4 count' < 500 'cells/mm3'	
+	
+/* Prescribe CPT */
+Action prescribe_CPT:
+	'Prescribe' 'CPT'	
+
+/* Prescribe Dapsone */
+Action prescribe_dapsone:
+	'Prescribe' 'Dapsone'
+
+/* Prescribe CPT */
+Action stop_CPT:
+	'Stop all' 'CPT'
+	
+/* Dispense 120mg (Quarter of a tablet) */
+Action suggest_120_mg:
+	'Dosage in mg' '120'
+	
+/* CPT for patients with symptomatic HIV disease */
+Recommendation managing_symptomatic_HIV_disease:
+	Conditions positive_rapid_HIV_test, advanced_to_severe_HIV
+	Actions prescribe_CPT
+	
+/* CPT for patients with low CD4 count */
+Recommendation managing_low_CD4_count:
+	Conditions positive_rapid_HIV_test, below_CPT_CD4_threshold
+	Actions prescribe_CPT
+	
+/* CPT for children born from an HIV infected mother */
+Recommendation born_from_an_HIV_positive_mother:
+	Conditions positive_mother_HIV_status, is_a_child, aged_6_weeks_or_more
+	Actions prescribe_CPT
+	
+/* CPT for patients with renal or hepatic toxicity */
+Recommendation managing_renal_or_hepatic_toxicity:
+	Conditions positive_rapid_HIV_test, with_renal_or_hepatic_toxicity, on_CPT, is_an_adult
+	Actions stop_CPT, prescribe_dapsone
+	
+/* CPT for patients with severe haematological toxicity */
+Recommendation managing_severe_haematological_toxicity:
+	Conditions positive_rapid_HIV_test, with_severe_haematological_toxicity, on_CPT, is_an_adult
+	Actions stop_CPT, prescribe_dapsone
+	
+/* CPT for patients with renal or hepatic toxicity in children */
+Recommendation managing_renal_or_hepatic_toxicity_in_children:
+	Conditions positive_rapid_HIV_test, with_renal_or_hepatic_toxicity, on_CPT, is_a_child
+	Actions stop_CPT
+	
+/* CPT for patients with severe cutaneous reactions in children */
+Recommendation managing_severe_cutaneous_reactions_in_children:
+	Conditions positive_rapid_HIV_test, with_severe_cutaneous_reactions, on_CPT, is_a_child
+	Actions stop_CPT
+	
+/* CPT dosing for younger children */
+Recommendation dosing_for_younger_children:
+	Conditions eligible_for_CPT, aged_6_weeks_or_more, aged_less_than_5_months
+	Actions suggest_120_mg
+	
+	
+		
+	
+	

@@ -1,0 +1,107 @@
+/* Prescribed Zidovudine */
+Condition prescribed_zidovudine:
+	'ARVs' is 'Zidovudine'
+
+/* Prescribed Atazanavir/ritonavir */
+Condition prescribed_atazanavir_ritonavir:
+	'ARVs' is 'Atazanavir/ritonavir'	
+
+/* Prescribed Nelfinavir */
+Condition prescribed_nelfinavir:
+	'ARVs' is 'Nelfinavir'
+	
+/* Prescribed Atazanavir */
+Condition prescribed_atazanavir:
+	'ARVs' is 'Atazanavir'
+	
+/* Prescribed Lamivudine */
+Condition prescribed_lamivudine:
+	'ARVs' is 'Lamivudine'
+	
+/* Prescribed Zalcitabine */
+Condition prescribed_zalcitabine:
+	'ARVs' is 'Zalcitabine'
+	
+/* Prescribed Emtricitabine */
+Condition prescribed_emtricitabine:
+	'ARVs' is 'Emtricitabine'
+	
+/* Age category of an adult */	
+Condition is_an_adult:
+	age >= 15 years	
+
+/* Dispense 0.75mg */
+Action suggest_0_75_mg:
+	'Dosage in mg' '0.75'
+	
+/* Dispense 400mg */
+Action suggest_400_mg:
+	'Dosage in mg' '400'
+	
+/* Dispense 300mg */
+Action suggest_300_mg:
+	'Dosage in mg' '300'
+	
+/* Dispense 300/100mg */
+Action suggest_300_100_mg:
+	'Dosage in mg' '300/100'
+	
+/* Dispense 200mg */
+Action suggest_200_mg:
+	'Dosage in mg' '200'
+	
+/* Dispense 150mg */
+Action suggest_150_mg:
+	'Dosage in mg' '150'
+	
+/* Dispense 1250mg */
+Action suggest_1250_mg:
+	'Dosage in mg' '1250'
+	
+/* Suggest once daily as frequency */
+Action take_once_daily:
+	'Frequency' 'Once a day (OD)'
+	
+/* Suggest twice daily as frequency */
+Action take_twice_daily:
+	'Frequency' 'Twice a day (BD)'
+	
+/* Suggest three times daily as frequency */
+Action take_three_times_daily:
+	'Frequency' 'Three times a day'
+
+/* Dosing of zidovudine */
+Recommendation when_zidovudine_is_prescribed:
+	Conditions prescribed_zidovudine, is_an_adult
+	Actions suggest_300_mg, take_twice_daily 	
+	
+/* Dosing of Lamivudine */
+Recommendation when_lamivudine_is_prescribed:
+	Conditions prescribed_lamivudine, is_an_adult
+	Actions suggest_150_mg, take_twice_daily 		
+	
+/* Dosing of Zalcitabine */
+Recommendation when_zalcitabine_is_prescribed:
+	Conditions prescribed_zalcitabine, is_an_adult
+	Actions suggest_0_75_mg, take_three_times_daily 			
+	
+/* Dosing of Emtricitabine */
+Recommendation when_emtricitabine_is_prescribed:
+	Conditions prescribed_emtricitabine, is_an_adult
+	Actions suggest_200_mg, take_once_daily 			
+	
+/* Dosing of Nelfinavir */
+Recommendation when_nelfinavir_is_prescribed:
+	Conditions prescribed_nelfinavir, is_an_adult
+	Actions suggest_1250_mg, take_twice_daily 			
+
+/* Dosing of Atazanavir */
+Recommendation when_atazanavir_is_prescribed:
+	Conditions prescribed_atazanavir, is_an_adult
+	Actions suggest_400_mg, take_once_daily 			
+
+/* Dosing of Atazanavir/Ritonavir  */
+Recommendation when_atazanavir_ritonavir_is_prescribed:
+	Conditions prescribed_atazanavir_ritonavir, is_an_adult
+	Actions suggest_300_100_mg, take_once_daily 			
+				

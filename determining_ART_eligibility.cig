@@ -1,0 +1,134 @@
+/* Minimum age of children and adults */	
+Condition child_from_15_years:
+	age >= 15 years
+
+/* Age from 18 months */	
+Condition child_from_18_months:
+	age >= 18 months
+
+/* Age to 3 years */	
+Condition child_to_3_years:
+	age < 3 years
+
+/* Age from 3 years */	
+Condition child_from_3_years:
+	age >= 3 years
+
+/* Age to 5 years */	
+Condition child_to_5_years:
+	age < 5 years
+		
+/* Maximum age of a very young child under 18 months */	
+Condition child_under_18_months:
+	age < 18 months	
+
+/* Positive rapid HIV test result */
+Condition positive_rapid_HIV_test:
+	'HIV rapid test result' is positive
+
+/* Positive DNA-PCR test result */	
+Condition positive_DNA_PCR_test:
+	'DNA-PCR test result' is positive
+	
+/* Patient not on ART */	
+Condition not_on_ART:
+ 	'On ART' is No
+ 	
+/* Advanced to severe HIV clinical stage */	
+Condition advanced_to_severe_HIV:
+	'WHO clinical stage' is 'WHO stage 3/4'	
+
+/* Lymphocyte count threshold for adults */	
+Condition adult_lymphocyte_count_threshold:
+	'Lymphocyte count' < 1200 'cells/mm3'		
+	
+/* Lymphocyte count threshold for children */	
+Condition child_lymphocyte_count_threshold:
+	'Lymphocyte count' < 2500 'cells/mm3'		
+	
+/* CD4 count % for children */	
+Condition child_CD4_percent_threshold:
+	'CD4 %' < 20		
+
+/* Lymphocyte count threshold for younger children */	
+Condition younger_child_lymphocyte_count_threshold:
+	'Lymphocyte count' < 3000 'cells/mm3'		
+	
+/* CD4 count for younger children */	
+Condition younger_child_CD4_count_threshold:
+	'CD4 count' < 750 'cells/mm3'	
+		
+/* Patient presenting with Oral Candidiasis */	
+Condition with_oral_candidiasis:
+	'Presenting condition' is 'Oral candidiasis'
+	
+/* Patient presenting with Pneumonia */	
+Condition with_pneumonia:
+	'Presenting condition' is 'Pneumonia'		
+
+/* Flag as eligible for ART */
+Action flag_eligible_for_ART:
+  "Flag patient for" "ART"	 	
+  
+/* Recommendation for determining ART eligibility in children and adults aged 15 years and above
+ * with advanced to severe HIV disease
+ */
+Recommendation adult_patients_with_severe_HIV:
+	Conditions not_on_ART, positive_rapid_HIV_test, advanced_to_severe_HIV,
+ 		child_from_15_years 
+	Actions flag_eligible_for_ART
+		  
+/* Recommendation for determining ART eligibility in children and adults aged 15 and above with 
+ * mild HIV disease and low lymphocyte count
+ */
+Recommendation adult_patients_with_mild_HIV_and_low_lymphocyte_count:
+	Conditions positive_rapid_HIV_test, not_on_ART, child_from_15_years,  
+		adult_lymphocyte_count_threshold, mild_HIV
+	Actions flag_eligible_for_ART	
+	
+	
+/* Recommendation for determining ART eligibility in children aged 3 to 5 years with 
+ * low lymphocyte count
+ */
+Recommendation children_with_low_lymphocyte_count:
+	Conditions positive_rapid_HIV_test, not_on_ART, child_from_3_years, child_to_5_years, 
+		child_lymphocyte_count_threshold
+	Actions flag_eligible_for_ART					  
+
+/* Recommendation for determining ART eligibility in children aged 18 months to 3 years with 
+ * low lymphocyte count
+ */
+Recommendation younger_children_with_low_lymphocyte_count:
+	Conditions positive_rapid_HIV_test, not_on_ART, child_from_18_months, child_to_3_years, 
+		younger_child_lymphocyte_count_threshold
+	Actions flag_eligible_for_ART					  
+
+/* Recommendation for determining ART eligibility in infants with PSHD with Oral Candidiasis 
+ * and Severe Pneuminia
+ */
+Recommendation ART_eligibility_in_PSHD_candidiasis_and_pneumonia:
+	Conditions not_on_ART, with_oral_candidiasis, with_pneumonia, 
+		positive_rapid_HIV_test, child_under_18_months
+	Actions flag_eligible_for_ART	
+	
+/* Recommendation for determining ART eligibility in infants under 18 months
+ * with low CD4 percentage 
+ */
+Recommendation infants_under_18_months_with_low_CD4_percent:
+	Conditions not_on_ART, positive_DNA_PCR_test, child_under_18_months, child_CD4_percent_threshold 
+	Actions flag_eligible_for_ART	
+
+/* Recommendation for determining ART eligibility in infants under 18 months
+ * with low lymphocyte count 
+ */
+Recommendation infants_under_18_months_with_low_lymphocyte_count:
+	Conditions not_on_ART, positive_DNA_PCR_test, child_under_18_months, younger_child_lymphocyte_count_threshold 
+	Actions flag_eligible_for_ART	
+	
+/* Recommendation for determining ART eligibility in infants under 18 months
+ * with low CD4 count 
+ */
+Recommendation infants_under_18_months_with_low_CD4_count:
+	Conditions not_on_ART, positive_DNA_PCR_test, child_under_18_months, younger_child_CD4_count_threshold 
+	Actions flag_eligible_for_ART	
+					  			

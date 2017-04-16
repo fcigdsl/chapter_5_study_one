@@ -1,0 +1,50 @@
+/* Positive rapid HIV test result */
+Condition positive_rapid_HIV_test:
+	'HIV rapid test result' is positive
+		
+/* WHO stage II(Mild) HIV clinical stage */	
+Condition mild_HIV:
+	'WHO clinical stage' is 'WHO stage 2'
+
+/* Asymptomatic to mild HIV clinical stage */	
+Condition asymptomatic_to_mild_HIV:
+	'WHO clinical stage' is 'WHO stage 1/2'	
+
+/* Patient not on ART */	
+Condition not_on_ART:
+ 	'On ART' is No
+ 	
+/* CD4 count result */	
+Condition CD4_count_less_500:
+ 	'CD4 count' < 500 'cells/mm3'
+
+/* CD4 count result aged 6 months or more */	
+Condition CD4_age_6_months_or_more:
+ 	'CD4 age' >= 6 months
+
+/* Patient presenting with pregnancy */	
+Condition pregnant_patient:
+	'Pregnant woman' is Yes
+
+/* Order CD4 count test */
+Action order_CD4_count_test:
+	Order 'CD4 count test'
+	
+/* Recommendation for pregnant women */
+Recommendation CD4_test_for_pregnant_women:
+	Conditions not_on_ART, positive_rapid_HIV_test, pregnant_patient, asymptomatic_to_mild_HIV
+	Actions order_CD4_count_test
+	
+/* Recommendation for mild HIV*/
+Recommendation CD4_test_for_WHO_stage_II:
+	Conditions not_on_ART, positive_rapid_HIV_test, mild_HIV
+	Actions order_CD4_count_test
+	
+/* Recommendation for 6 months follow up*/
+Recommendation CD4_test_6_months_followup:
+	Conditions not_on_ART, positive_rapid_HIV_test, CD4_count_less_500, CD4_age_6_months_or_more
+	Actions order_CD4_count_test	
+	
+	
+		 			
+		

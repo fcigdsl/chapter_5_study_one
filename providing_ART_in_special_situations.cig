@@ -1,0 +1,87 @@
+/* Female patient */
+Condition female_patient:
+	gender is Female
+	
+/* Child bearing age */
+Condition child_bearing_age:
+	age >= 12 years
+	
+/* Born in less than 72 hours */	
+Condition under_72_hours_old:
+	age < 72 hours
+	
+/* Patient presenting with pregnancy */	
+Condition pregnant_patient:
+	'Pregnant woman' is Yes
+	
+/* Patient on first line ART */	
+Condition is_on_firstline:
+ 	'ARVs' is 'd4T/3TC/NVP' 			
+	
+/* Contains NVP */
+Condition taking_neverapine_based_drug:
+	'ARVs' is 'NVP based regimen'
+	
+/* Contains EFV */
+Condition taking_efavirenz_based_drug:
+	'ARVs' is 'EFV based regimen'
+
+/* Patient is in labour */	
+Condition in_labour:
+	'In labour' is present
+	
+/* Mother on ARVs */	
+Condition mother_on_ARVs:
+	'Is mother on ART?' is Yes
+	
+/* Prescribe medroxyprogesterone */
+Action prescribe_medroxyprogesterone:
+	Prescribe medroxyprogesterone
+	
+/* Offer Condoms to patient */
+Action offer_condoms:
+	Offer condoms
+
+/* Offer Condoms to patient */
+Action offer_contraceptives:
+	Offer contraceptives
+
+/* Continue first line ART */
+Action continue_firstline_ART:
+	Continue 'd4T/3TC/NVP'	
+
+/* Prescribe standard ARV prophylaxis */
+Action prescribe_standard_ARV_prophylaxix:
+	Prescribe 'Standard ARV prophylaxis'	
+
+/* Do not give NVP to patient */
+Action do_not_give_NVP:
+	'Stop all' 'NVP'	
+							
+/* Managing contraceptives and NVP */
+Recommendation contraceptives_and_neverapine:
+	Conditions female_patient, child_bearing_age, taking_neverapine_based_drug 
+	Actions	prescribe_medroxyprogesterone, offer_condoms				
+	
+/* Managing contraceptives and EFV */
+Recommendation contraceptives_and_efavirenz:
+	Conditions female_patient, child_bearing_age, taking_efavirenz_based_drug 
+	Actions	offer_contraceptives				
+	
+/* d4T/3TC/NVP not contraindicated */
+Recommendation d4T_3TC_NVP_not_contraindicated:
+	Conditions pregnant_patient, is_on_firstline 
+	Actions	continue_firstline_ART				
+	
+/* Discontinuing NVP at the onset of labour */
+Recommendation discontinue_NVP_in_labour:
+	Conditions in_labour, is_on_firstline 
+	Actions	do_not_give_NVP
+	
+/* Managing child born to an HIV positive mother on ART */
+Recommendation born_to_HIV_positive_mother_on_ART:
+	Conditions mother_on_ARVs, under_72_hours_old 
+	Actions	prescribe_standard_ARV_prophylaxix
+	
+				
+		

@@ -1,0 +1,81 @@
+/* Patient with convulsions */
+Condition convulsion_patient:
+	"Symptom present" is convulsion
+	
+/* Able to drink or feed */
+Condition able_to_drink_or_feed:
+	"Not Able to drink or feed" is No		
+		
+/* Patient presenting with red eyes */
+Condition red_eyes:
+	"Symptom present" is "Red eye"	
+	
+/* Red eyes for 4 days or more */
+Condition red_eyes_for_4_days_or_more:
+	"Red eye duration" >= 4 days
+			
+/* Patient with vision difficulties */
+Condition vision_difficulties:
+	"Symptom present" is "Vision dificulties"	
+	
+/* Patient with potential chest indrawing */
+Condition chest_indrawing:
+	"Symptom present" is "potential chest indrawing"	
+	
+/* Patient presenting with palmar pallor */
+Condition palmar_pallor:
+	"Symptom present" is "Palmar pallor"	
+	
+/* Patient presenting with swelling of both feet */
+Condition swelling_feet:
+	"Symptom present" is "Swelling of both feet"
+	
+/* Give antibiotic eye ointment */	
+Action give_antibiotic_eye_ointment:
+	Administer "Antibiotic eye ointment"
+		
+/* Give oral antibiotic */	
+Action give_oral_antibiotic:
+	Administer "Oral antibiotic"
+		
+/* Refer to health facility */
+Action refer_to_facility:
+	"Refer to" "Health facility"
+	
+/* Advise caregiver to continue giving fluids and feeding */
+Action advise_to_give_fluids_and_feed:
+	"Advise caregiver" "Continue to give fluids and feeding"
+		
+/* Managing a patient presenting with convulsions xxx */		
+Recommendation can_feed_with_convulsions:
+	Conditions able_to_drink_or_feed, convulsion_patient
+	Actions refer_to_facility, advise_to_give_fluids_and_feed
+	
+/* Managing a patient that has palmar pallor xxx  */		
+Recommendation managing_palmar_pallor:
+	Conditions palmar_pallor
+	Actions refer_to_facility, advise_to_give_fluids_and_feed
+	
+/* Managing a patient that has swelling of both feet xxx */		
+Recommendation managing_swollen_feet:
+	Conditions swelling_feet
+	Actions refer_to_facility, advise_to_give_fluids_and_feed
+	
+/* Managing red eyes of 4 days or more xxx */		
+Recommendation can_feed_with_severe_red_eyes:
+	Conditions able_to_drink_or_feed, red_eyes, red_eyes_for_4_days_or_more
+	Actions give_antibiotic_eye_ointment, refer_to_facility, advise_to_give_fluids_and_feed
+	
+/* Managing red eyes with vision difficulties xxx */		
+Recommendation can_feed_with_red_eyes_and_vision_difficulties:
+	Conditions able_to_drink_or_feed, red_eyes, vision_difficulties
+	Actions give_antibiotic_eye_ointment, refer_to_facility, advise_to_give_fluids_and_feed
+	
+/* Managing chest indrawing xxx */		
+Recommendation can_feed_with_chest_indrawing:
+	Conditions able_to_drink_or_feed, chest_indrawing
+	Actions give_oral_antibiotic, refer_to_facility, advise_to_give_fluids_and_feed
+	
+	
+	
+	

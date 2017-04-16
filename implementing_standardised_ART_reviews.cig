@@ -1,0 +1,45 @@
+/* Side effects between reviews */
+Condition has_side_effects_between_reviews:
+	'ART side effects between reviews' is Yes
+	
+/* Side effects between reviews */
+Condition has_no_ART_side_effects:
+	'ART side effects' is No
+	
+/* On ART for 6 months or more */
+Condition on_ART_for_6_months_or_more:
+	'Duration of treatment' >= 6 months
+
+/* Patient on ART */	
+Condition on_ART:
+ 	'On ART' is Yes
+ 	
+/* Patient on ART */	
+Condition is_on_firstline:
+ 	'ART regimen' is 'd4T/3TC/NVP'
+ 	
+/* Advise patient to report to a health facility */
+Action advise_to_report_to_facility:
+	'Advise patient' 'Report to health facility'
+
+/* Advise patient to report to a health facility */
+Action refer_to_group_ART_adherence_counselling:
+	'Refer to' 'Group ART adherence councelling'
+	
+/* Advise patient to report to a health facility */
+Action schedule_appointment_every_two_months:
+	'Schedule clinic appointment' 'Every two months'	
+	
+/* Advise patients with side effects that occur between reviews */
+Recommendation side_effects_occuring_between_reviews:
+	Conditions has_side_effects_between_reviews, on_ART, is_on_firstline
+	Actions advise_to_report_to_facility
+		
+/* Managing stable patients after 6 months */
+Recommendation stable_patient_after_6_months:
+	Conditions has_no_ART_side_effects, on_ART, is_on_firstline, on_ART_for_6_months_or_more
+	Actions refer_to_group_ART_adherence_counselling, schedule_appointment_every_two_months
+ 	 	
+ 	
+ 	
+	

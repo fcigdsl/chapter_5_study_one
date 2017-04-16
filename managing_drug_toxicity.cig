@@ -1,0 +1,42 @@
+/* Presenting with pain, paraesthesia, numbness or weakness of lower limbs */
+Condition with_numbness_of_lower_limbs:
+	'Pain or numbness of lower limbs' is present
+
+/* Presenting with severe upper abnominal pain */
+Condition with_severe_upper_abnominal_pain:
+	'Severe upper abnominal pain' is present
+		
+/* Presenting with nausea */
+Condition with_nausea:
+	'Nausea' is present
+
+/* Presenting with vomiting */
+Condition is_vomiting:
+	'Vomiting' is present
+
+/* Contains Stavudine (d4T) */
+Condition taking_stavudine:
+	'ARVs' is 'd4T based regimen'
+
+/* Patient is on ART */	
+Condition is_on_ART:
+ 	'On ART' is Yes		
+	
+/* Diagnose patient with peripheral neuropathy */
+Action diagnose_with_peripheral_neuropathy:
+	'Diagnose with' 'Peripheral neuropathy'
+	
+/* Diagnose patient with pancreatitis */
+Action diagnose_with_pancreatitis:
+	'Diagnose with' 'Pancreatitis'
+	
+/* Diagnosing peripheral neuropathy */
+Recommendation diagnosing_peripheral_neuropathy:
+	Conditions with_numbness_of_lower_limbs, taking_stavudine
+	Actions diagnose_with_peripheral_neuropathy
+
+/* Diagnosing pancreatitis */
+Recommendation diagnosing_pancreatitis:
+	Conditions is_on_ART, with_severe_upper_abnominal_pain, with_nausea, is_vomiting, taking_stavudine
+	Actions diagnose_with_pancreatitis
+		
